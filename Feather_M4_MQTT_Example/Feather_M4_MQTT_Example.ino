@@ -24,6 +24,7 @@ const char * mqtt_topic_f_string = "%s/%s";
 char temp_string[256];
 
 void mqtt_callback(char * topic, byte * payload, unsigned int length);
+void mqtt_sub_topics();
 void mqtt_reconnect();
 
 void setup() {
@@ -67,6 +68,10 @@ void mqtt_callback(char * topic, byte * payload, unsigned int length){
 
 }
 
+void mqtt_sub_topics(){
+  
+}
+
 void mqtt_reconnect(){
   while(!mqttClient.connected()){
     DEBUG_PRINTLN("Attempting an MQTT Connection");
@@ -77,14 +82,6 @@ void mqtt_reconnect(){
 
       DEBUG_PRINTLN("Subbing to topics");
 
-      for(int i = 0; i < 6; i++){
-        sprintf(temp_string, mqtt_topic_f_string, device_name, sub_topics[i]);
-        
-        DEBUG_PRINT("Subbing to topic: "); DEBUG_PRINTLN(temp_string);
-        
-        mqttClient.subscribe(temp_string);
-        memset(temp_string, 0, sizeof(temp_string));
-      }
     } else {
       DEBUG_PRINT("Failed, rc= "); DEBUG_PRINTLN(mqttClient.state());
       delay(5000);
